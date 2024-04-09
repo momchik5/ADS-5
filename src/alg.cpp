@@ -7,36 +7,32 @@ int prioritet(char);
 int schet(int, int, char);
 
 std::string infx2pstfx(std::string inf) {
-std::string postfix = "";
-TStack<char, 100> d;
-for (int i = 0; i < infix.length(); i++) {
-    if (isdigit(infix[i])) {
-        postfix += infix[i];
-        if (i != infix.length() - 1) {
-            postfix += " ";
-        }
-    }
-    else if (infix[i] == '(') {
-        d.push(infix[i]);
-    }
-    else if (d.isempty()) {
-        d.push(infix[i]);
-    }
-    else if (infix[i] == ')') {
-        while (true) {
-            if (d.isempty()) {
-                break;
-            }
-            else if (d.check() == '(') {
-                break;
-            }
-            postfix += d.pop();
+    std::string postfix = "";
+    TStack<char, 100> d;
+    for (int i = 0; i < infix.length(); i++) {
+        if (isdigit(infix[i])) {
+            postfix += infix[i];
             if (i != infix.length() - 1) {
                 postfix += " ";
             }
+        } else if (infix[i] == '(') {
+            d.push(infix[i]);
+        } else if (d.isempty()) {
+            d.push(infix[i]);
+        } else if (infix[i] == ')') {
+            while (true) {
+                if (d.isempty()) {
+                    break;
+                } else if (d.check() == '(') {
+                    break;
+                }
+                postfix += d.pop();
+                if (i != infix.length() - 1) {
+                    postfix += " ";
+                }
+            }
         }
         d.pop();
-    }
     else if (prioritet(infix[i]) > prioritet(d.check())) {
         d.push(infix[i]);
     }
